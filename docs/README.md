@@ -1,5 +1,9 @@
 # Documentation
 
+
+
+https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/<ID>
+
 |API / Permissions name|Type|Description|Admin consent required|Status|
 |----------------------|----|-----------|----------------------|------|
 |Microsoft Graph (25)|||||
