@@ -128,6 +128,7 @@ class oidcclient {
             'response_mode' => 'form_post',
             'resource' => $this->resource,
             'state' => $this->getnewstate($nonce, $stateparams),
+            'redirect_uri' => 'https://mahara.uof.ca/auth/oidc/redirect.php'
         );
         if ($promptlogin === true) {
             $params['prompt'] = 'login';
