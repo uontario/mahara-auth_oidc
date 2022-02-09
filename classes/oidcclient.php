@@ -196,6 +196,7 @@ class oidcclient {
             'client_secret' => $this->clientsecret,
             'grant_type' => 'authorization_code',
             'code' => $code,
+            'redirect_uri' => 'https://mahara.uof.ca/auth/oidc/redirect.php'
         );
 
         try {
