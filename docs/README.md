@@ -2,7 +2,7 @@
 
 
 
-https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/:id:
+https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/ :id:
 
 |API / Permissions name|Type|Description|Admin consent required|Status|
 |----------------------|----|-----------|----------------------|------|
