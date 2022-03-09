@@ -118,7 +118,7 @@ class oidcclient {
      * @param array $stateparams Additional state params.
      * @return array Array of request parameters.
      */
-    protected function getauthrequestparams($promptlogin = false, array $stateparams = array()) {
+    protected function getauthrequestparams($promptlogin = false, array $stateparams = array(), $response_url = null) {
         $nonce = 'N'.uniqid();
         $params = array(
             'response_type' => 'code',
@@ -128,7 +128,7 @@ class oidcclient {
             'response_mode' => 'form_post',
             'resource' => $this->resource,
             'state' => $this->getnewstate($nonce, $stateparams),
-            'redirect_uri' => 'https://mahara.uof.ca/auth/oidc/redirect.php'
+            'redirect_uri' => $response_url
         );
         if ($promptlogin === true) {
             $params['prompt'] = 'login';
@@ -161,7 +161,7 @@ class oidcclient {
      * @param bool $promptlogin Whether to prompt the OP for a login.
      * @param array $stateparams Additional state params.
      */
-    public function authrequest($promptlogin = false, array $stateparams = array()) {
+    public function authrequest($promptlogin = false, array $stateparams = array(), $response_url = null) {
         if (empty($this->clientid)) {
             throw new \AuthInstanceException(get_string('erroroidcclientnocreds', 'auth.oidc'));
         }
@@ -169,7 +169,7 @@ class oidcclient {
         if (empty($this->endpoints['auth'])) {
             throw new \AuthInstanceException(get_string('erroroidcclientnoauthendpoint', 'auth.oidc'));
         }
-        $params = $this->getauthrequestparams($promptlogin, $stateparams);
+        $params = $this->getauthrequestparams($promptlogin, $stateparams, $response_url);
         $redirecturl = $this->endpoints['auth'];
         $querystring = http_build_query($params);
         if (strpos($redirecturl, '?') !== false) {
@@ -187,7 +187,7 @@ class oidcclient {
      * @param string $code An authorization code.
      * @return array Received parameters.
      */
-    public function tokenrequest($code, $respone_url = null) {
+    public function tokenrequest($code, $response_url = null) {
         if (empty($this->endpoints['token'])) {
             throw new \AuthInstanceException(get_string('erroroidcclientnotokenendpoint', 'auth.oidc'));
         }
@@ -197,7 +197,7 @@ class oidcclient {
             'client_secret' => $this->clientsecret,
             'grant_type' => 'authorization_code',
             'code' => $code,
-            'redirect_uri' => $respone_url
+            'redirect_uri' => $response_url
         );
 
         try {
