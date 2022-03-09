@@ -187,7 +187,7 @@ class oidcclient {
      * @param string $code An authorization code.
      * @return array Received parameters.
      */
-    public function tokenrequest($code) {
+    public function tokenrequest($code, $respone_url = null) {
         if (empty($this->endpoints['token'])) {
             throw new \AuthInstanceException(get_string('erroroidcclientnotokenendpoint', 'auth.oidc'));
         }
@@ -197,7 +197,7 @@ class oidcclient {
             'client_secret' => $this->clientsecret,
             'grant_type' => 'authorization_code',
             'code' => $code,
-            'redirect_uri' => 'https://mahara.uof.ca/auth/oidc/redirect.php'
+            'redirect_uri' => $respone_url
         );
 
         try {
