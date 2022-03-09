@@ -23,6 +23,12 @@ class authcode extends \auth_oidc\loginflow\base {
      * @return mixed Determined by loginflow.
      */
     public function handleredirect() {
+        global $CFG, $USER;
+        if($USER->is_logged_in()) {
+            redirect('/');
+            exit();
+        }
+
         $state = param_variable('state', null);
         $promptlogin = (bool)param_variable('promptlogin', 0);
         if (!empty($state)) {
@@ -31,7 +37,7 @@ class authcode extends \auth_oidc\loginflow\base {
         }
         else {
             // Initial login request.
-            $this->initiateauthrequest($promptlogin, array('forceflow' => 'authcode'));
+            $this->initiateauthrequest($promptlogin, array('forceflow' => 'authcode',trim($CFG->wwwroot, '/').'/auth/oidc/redirect.php'));
         }
     }
 
