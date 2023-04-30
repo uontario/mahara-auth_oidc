@@ -27,10 +27,12 @@ class base {
         $default = array(
             'opname' => get_string('pluginname', 'auth.oidc'),
         );
+        $url=trim($CFG->wwwroot, '/');
+        if (empty($url)) $url='https://' . $_SERVER['SERVER_NAME'];
         $storedconfig = array(
             'clientid' => '',
             'clientsecret' => '',
-            'redirecturi' => trim($CFG->wwwroot, '/').'/auth/oidc/redirect.php',
+            'redirecturi' => $url.'/auth/oidc/redirect.php',
             'resource' => '',
             'authendpoint' => '',
             'tokenendpoint' => '',
