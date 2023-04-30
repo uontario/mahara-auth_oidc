@@ -37,7 +37,9 @@ class authcode extends \auth_oidc\loginflow\base {
         }
         else {
             // Initial login request.
-            $this->initiateauthrequest($promptlogin, array('forceflow' => 'authcode',trim($CFG->wwwroot, '/').'/auth/oidc/redirect.php'));
+            $url=trim($CFG->wwwroot, '/');
+            if (empty($url)) $url='https://' . $_SERVER['SERVER_NAME'];
+            $this->initiateauthrequest($promptlogin, array('forceflow' => 'authcode',$url.'/auth/oidc/redirect.php'));
         }
     }
 
