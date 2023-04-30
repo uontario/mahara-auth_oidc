@@ -132,8 +132,9 @@ class authcode extends \auth_oidc\loginflow\base {
 
         // Get token from auth code.
         $client = $this->get_oidcclient();
-        $tokenparams = $client->tokenrequest($authparams['code'],
-             trim($CFG->wwwroot, '/').'/auth/oidc/redirect.php');
+        $url=trim($CFG->wwwroot, '/');
+        if (empty($url)) $url='https://' . $_SERVER['SERVER_NAME'];
+        $tokenparams = $client->tokenrequest($authparams['code'], $url .'/auth/oidc/redirect.php');
         if (!isset($tokenparams['id_token'])) {
             throw new \AuthInstanceException(get_string('errorauthnoidtoken', 'auth.oidc'));
         }
